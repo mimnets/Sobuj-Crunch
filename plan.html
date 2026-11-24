@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobuj Crunch Business Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&family=Baloo+Da+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: a single reading column (max 900px) of numbered plan sections; tables scroll inside their own box on phones. One deliberate light look matching the landing page. */
+  :root{
+    color-scheme: light;
+    --bg:#fbf7ef; --card:#ffffff; --ink:#1d241f; --muted:#5b665e; --line:#e6e1d4;
+    --green:#1f5c32; --green-d:#163d22; --green-l:#e6f2e8; --green-m:#7fb35a;
+    --kraft:#c99a62; --kraft-l:#f6ecdd; --orange:#e8762b; --red:#b42318; --red-l:#fdeceb; --amber-l:#fff4d6;
+    --font-body:'Anek Bangla','Noto Sans Bengali',system-ui,sans-serif;
+    --font-display:'Baloo Da 2','Anek Bangla','Noto Sans Bengali',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.65}
+  .wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  h1,h2,h3{font-family:var(--font-display);color:var(--green-d);line-height:1.25;text-wrap:balance;margin:0}
+  p{margin:0 0 12px}
+  header.top{background:var(--green-d);color:#fff;padding-block:40px 34px}
+  header.top .eyebrow{font-size:14px;letter-spacing:.5px;color:#bcd6c1;margin-bottom:8px}
+  header.top h1{color:#fff;font-size:clamp(28px,5vw,42px);margin-bottom:10px}
+  header.top p{color:#d8e8db;max-width:680px;margin:0}
+  .verdict{margin-top:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:16px 18px}
+  .verdict b{color:#ffd9b8}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;padding-block:18px 0}
+  nav.toc a{font-size:14px;text-decoration:none;color:var(--green);background:var(--green-l);padding:4px 12px;border-radius:99px}
+  nav.toc a:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  section{padding-block:34px 6px}
+  section>h2{font-size:clamp(22px,3.4vw,28px);margin-bottom:6px;display:flex;gap:10px;align-items:baseline}
+  section>h2 .n{font-size:.75em;color:var(--kraft)}
+  .lead{color:var(--muted);margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+  .tbl{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px}
+  table{border-collapse:collapse;width:100%;min-width:620px;font-size:15.5px}
+  th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  th{background:#f6f3ec;color:var(--green-d);font-weight:600}
+  tr:last-child td{border-bottom:0}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .neg{color:var(--red);font-weight:600}
+  .pos{color:var(--green);font-weight:600}
+  .pill{display:inline-block;font-size:13px;font-weight:600;padding:1px 10px;border-radius:99px;white-space:nowrap}
+  .pill.now{background:var(--green);color:#fff}
+  .pill.pilot{background:var(--amber-l);color:#7a5b00}
+  .pill.later{background:#ecebe6;color:#4a4a44}
+  .lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:14px}
+  .line{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px}
+  .line.main{border:2px solid var(--green)}
+  .line h3{font-size:20px}
+  .line .tag{font-size:14px;color:var(--muted)}
+  .line .price{font-family:var(--font-display);font-size:26px;color:var(--green-d);margin-top:4px}
+  .line ul{margin:4px 0 0 18px;padding:0;font-size:15px;color:var(--muted)}
+  /* bar chart */
+  .chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+  .chart h3{font-size:18px;margin-bottom:2px}
+  .chart .cap{font-size:14px;color:var(--muted);margin-bottom:14px}
+  .bar-row{display:grid;grid-template-columns:200px 1fr;gap:12px;align-items:center;margin-bottom:10px}
+  .bar-row .lbl{font-size:15px}
+  .bar-track{position:relative;height:22px;margin-right:64px}
+  .bar{height:22px;width:var(--w);min-width:4px;background:var(--green);border-radius:0 4px 4px 0;position:relative}
+  .bar.imp{background:#8a6a43}
+  .bar-val{position:absolute;left:calc(var(--w) + 8px);top:0;line-height:22px;font-family:var(--font-display);font-weight:700;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .legend{display:flex;gap:16px;font-size:14px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  /* timeline */
+  .timeline{list-style:none;margin:0;padding:0;position:relative}
+  .timeline::before{content:"";position:absolute;left:15px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .timeline li{position:relative;padding:0 0 18px 46px}
+  .timeline .dot{position:absolute;left:4px;top:4px;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center;font-family:var(--font-display)}
+  .timeline .dot.p{background:var(--kraft)}
+  .timeline .dot.l{background:#9a9a90}
+  .timeline b{color:var(--green-d)}
+  .timeline .when{font-size:14px;color:var(--muted);margin-left:6px}
+  .timeline p{margin:2px 0 0;color:var(--muted);font-size:15.5px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .callout{border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:15.5px}
+  .callout.warn{background:var(--amber-l);border:1px solid #f0d58a}
+  .callout.info{background:var(--green-l);border:1px solid #cfe3d1}
+  .callout.risk{background:var(--red-l);border:1px solid #f3c7c3}
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{padding:6px 0 6px 28px;position:relative;border-bottom:1px dashed var(--line)}
+  .checks li:last-child{border-bottom:0}
+  .checks li::before{content:"☐";position:absolute;left:2px;top:5px;color:var(--green);font-size:18px;line-height:1}
+  .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .kpi b{display:block;font-family:var(--font-display);font-size:22px;color:var(--green-d)}
+  .kpi span{font-size:13.5px;color:var(--muted)}
+  .src{font-size:14px;color:var(--muted)}
+  .src a{color:var(--green)}
+  footer{padding-block:30px 50px;color:var(--muted);font-size:14px;text-align:center}
+  @media (max-width:760px){
+    body{font-size:16px}
+    .lines,.two{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr 1fr}
+    .bar-row{grid-template-columns:1fr;gap:4px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">সবুজ ক্রাঞ্চ · ব্যবসা পরিকল্পনা · নভেম্বর ২০২৬</div>
+    <h1>তিনটি প্রোডাক্ট লাইন, ধাপে ধাপে শুরু</h1>
+    <p>আমদানি করা চিপস দিয়ে বাজার যাচাই, পাশাপাশি পরিবারের ছোট সেটআপে দেশি ফলের পাইলট। সফল হলে ধাপে ধাপে বড় করা।</p>
+    <div class="verdict"><b>সিদ্ধান্ত:</b> একসাথে তিনটি লাইন নয়। এখন শুরু হবে <b>লাইন C (আমদানি)</b> আর <b>লাইন A-র পারিবারিক পাইলট</b>। লাইন B আসবে ৬-১২ মাস পরে। পেজে একসাথে সর্বোচ্চ দুটি অপশন দেখানো হবে।</div>
+    <nav class="toc" aria-label="সূচিপত্র">
+      <a href="#lines">তিন লাইন</a><a href="#cost">খরচ তুলনা</a><a href="#roadmap">ধাপ</a><a href="#phase1">আমদানি টেস্ট</a><a href="#family">পারিবারিক সেটআপ</a><a href="#lineA">লাইন A-র দাম</a><a href="#gate">যাচাইয়ের মাপকাঠি</a><a href="#license">লাইসেন্স</a><a href="#risks">ঝুঁকি</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="lines">
+  <h2><span class="n">১</span> তিনটি প্রোডাক্ট লাইন</h2>
+  <p class="lead">একই ব্র্যান্ড "সবুজ ক্রাঞ্চ"-এর অধীনে তিন ধরনের পণ্য। প্রতিটির খরচ, গল্প আর ঝুঁকি আলাদা।</p>
+  <div class="lines">
+    <div class="line main">
+      <span class="pill pilot">পাইলট: মাস ১-৩</span>
+      <h3>A · দেশি</h3>
+      <div class="tag">নিজস্ব + চুক্তিভিত্তিক খামার + পাইকারি কেনা ফল</div>
+      <div class="price">১০০ গ্রাম ৳২৯৯</div>
+      <ul><li>সবচেয়ে বেশি লাভ</li><li>"বাংলাদেশের খামার থেকে": সবচেয়ে বিশ্বাসযোগ্য গল্প</li><li>শুরুতে ডিহাইড্রেটরে শুকানো ফল (চিবিয়ে খাওয়ার মতো, পুরো মুচমুচে নয়)</li></ul>
+    </div>
+    <div class="line">
+      <span class="pill later">পরে: মাস ৬-১২</span>
+      <h3>B · হাইব্রিড</h3>
+      <div class="tag">৮০% দেশি + ২০% আমদানি করা কিউই, স্ট্রবেরি</div>
+      <div class="price">১০০ গ্রাম ৳৪৯৯</div>
+      <ul><li>রঙিন প্রিমিয়াম মিক্স</li><li>ভ্যাকুয়াম ফ্রায়ার লাগবে</li><li>প্যাকেটে লিখতে হবে: "উপাদান: বাংলাদেশ ও চীন"</li></ul>
+    </div>
+    <div class="line">
+      <span class="pill now">এখনই</span>
+      <h3>C · আমদানি</h3>
+      <div class="tag">চীনের ফ্যাক্টরিতে তৈরি, ঢাকায় স্টক</div>
+      <div class="price">৫০ গ্রাম ৳৩৯৯</div>
+      <ul><li>প্রসেসিং ঝুঁকি নেই, এখনই বিক্রি শুরু</li><li>~৮৯% শুল্কের কারণে লাভ কম</li><li>বাজার যাচাইয়ের হাতিয়ার</li></ul>
+    </div>
+  </div>
+</section>
+
+<section id="cost">
+  <h2><span class="n">২</span> প্রতি ১০০ গ্রামে খরচ</h2>
+  <p class="lead">প্যাকেটসহ পণ্যের খরচ। প্রচার আর ডেলিভারির খরচ এখানে ধরা হয়নি।</p>
+  <div class="chart" role="img" aria-label="প্রতি ১০০ গ্রামে খরচ: লাইন A ৳৮৫, লাইন B ৳১৬০, লাইন C ৫০০ কেজি চালানে ৳৫২০, লাইন C ১০০ কেজি টেস্ট চালানে ৳৬২২">
+    <h3>পণ্য + প্যাকেট খরচ (৳ / ১০০ গ্রাম)</h3>
+    <div class="cap">দেশি লাইনের খরচ আমদানির ছয় ভাগের এক ভাগেরও কম</div>
+    <div class="bar-row"><span class="lbl">A · দেশি (ডিহাইড্রেটর)</span><div class="bar-track"><div class="bar" style="--w:13.7%"></div><span class="bar-val" style="--w:13.7%">৳৮৫</span></div></div>
+    <div class="bar-row"><span class="lbl">B · হাইব্রিড (ভ্যাকুয়াম ফ্রায়ার)</span><div class="bar-track"><div class="bar" style="--w:25.7%"></div><span class="bar-val" style="--w:25.7%">৳১৬০</span></div></div>
+    <div class="bar-row"><span class="lbl">C · আমদানি, ৫০০ কেজি চালান</span><div class="bar-track"><div class="bar imp" style="--w:83.6%"></div><span class="bar-val" style="--w:83.6%">৳৫২০</span></div></div>
+    <div class="bar-row"><span class="lbl">C · আমদানি, ১০০ কেজি টেস্ট</span><div class="bar-track"><div class="bar imp" style="--w:100%"></div><span class="bar-val" style="--w:100%">৳৬২২</span></div></div>
+    <div class="legend"><span><i style="background:var(--green)"></i>দেশে প্রসেস করা</span><span><i style="background:#8a6a43"></i>আমদানি করা</span></div>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>খাত (প্রতি কেজি তৈরি পণ্য)</th><th class="num">A · দেশি</th><th class="num">B · হাইব্রিড</th><th class="num">C · আমদানি (৫০০ কেজি)</th></tr></thead>
+      <tbody>
+        <tr><td>কাঁচা ফল-সবজি (খোসাসহ ~৭ কেজি, গড় ৳৫০/কেজি)</td><td class="num">৳৩৫০</td><td class="num" rowspan="1">দেশি অংশ ৳৬০০ × ৮০%</td><td class="num">—</td></tr>
+        <tr><td>বিদ্যুৎ / গ্যাস / তেল</td><td class="num">৳৮০</td><td class="num">(উপরে ধরা)</td><td class="num">—</td></tr>
+        <tr><td>শ্রম (পরিবারের সদস্য, ৳৫০০/দিন হিসাবে ধরা)</td><td class="num">৳২০০</td><td class="num">(উপরে ধরা)</td><td class="num">—</td></tr>
+        <tr><td>মান পরীক্ষা, লাইসেন্স, অবচয়, অন্যান্য</td><td class="num">৳৭০</td><td class="num">(উপরে ধরা)</td><td class="num">—</td></tr>
+        <tr><td>আমদানি অংশ (পণ্য + ফ্রেইট + ~৮৯% শুল্ক)</td><td class="num">—</td><td class="num">৳৪,৭২৫ × ২০%</td><td class="num">৳৪,৭২৫</td></tr>
+        <tr><th>মোট / কেজি</th><th class="num">~৳৭০০</th><th class="num">~৳১,৪২৫</th><th class="num">~৳৪,৭২৫</th></tr>
+        <tr><td>+ প্যাকেট (১০০ গ্রামে)</td><td class="num">৳১৫</td><td class="num">৳২০</td><td class="num">৳৪৮ (৫০ গ্রামের ২টি)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="src">* B লাইনের দেশি অংশে ভ্যাকুয়াম ফ্রায়ারের তেল, বিদ্যুৎ, শ্রম আর অবচয় মিলিয়ে ~৳৬০০/কেজি ধরা হয়েছে। সবই আনুমানিক; পাইলটের পর আসল সংখ্যা বসাতে হবে।</p>
+</section>
+
+<section id="roadmap">
+  <h2><span class="n">৩</span> ধাপে ধাপে পরিকল্পনা</h2>
+  <p class="lead">প্রতিটি ধাপের শেষে সংখ্যা দেখে সিদ্ধান্ত। আগের ধাপ সফল না হলে পরের ধাপে বড় বিনিয়োগ নয়।</p>
+  <div class="card">
+    <ol class="timeline">
+      <li><span class="dot">১</span><b>লাইন C: আমদানি টেস্ট</b><span class="when">মাস ০-৩</span><p>সাপ্লায়ারের সর্বনিম্ন ১০০ কেজি অর্ডার। এখনকার ল্যান্ডিং পেজ দিয়ে বিক্রি। লক্ষ্য লাভ নয়, বাজার যাচাই: কারা কেনে, কত খরচে অর্ডার আসে, কতজন আবার কেনে।</p></li>
+      <li><span class="dot p">১খ</span><b>লাইন A: পারিবারিক পাইলট</b><span class="when">মাস ১-৩</span><p>২টি ২০-ট্রে ডিহাইড্রেটর দিয়ে আলাদা পরিষ্কার ঘরে শুরু। কলা, আনারস, পেঁপে: এই তিনটি ফল দিয়ে। আত্মীয়, বন্ধু আর C-র কাস্টমারদের ফ্রি স্যাম্পল দিয়ে মতামত নেওয়া।</p></li>
+      <li><span class="dot">২</span><b>লাইন A লঞ্চ</b><span class="when">মাস ৪-৬</span><p>পাইলটের মান ভালো হলে A হবে মূল পণ্য। ল্যান্ডিং পেজে দুটি অপশন থাকবে: "দেশি" (A) আর "প্রিমিয়াম আমদানি" (C)। C-র রিপিট বিক্রি কম হলে সেটা বন্ধ।</p></li>
+      <li><span class="dot l">৩</span><b>ভ্যাকুয়াম ফ্রায়ার + লাইন B</b><span class="when">মাস ৬-১২</span><p>A-র মাসিক বিক্রি স্থিতিশীল হলে ছোট ভ্যাকুয়াম ফ্রায়ার কেনা। তখন দেশি মুচমুচে চিপস, আর আমদানি করা কিউই-স্ট্রবেরি মিশিয়ে B।</p></li>
+      <li><span class="dot l">৪</span><b>বড় সেটআপ</b><span class="when">বছর ১+</span><p>বড় ফ্রায়ার, ব্লাঞ্চার, আলাদা প্রসেসিং ইউনিট, কর্মী নিয়োগ, দোকানে পাইকারি বিক্রি।</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="phase1">
+  <h2><span class="n">৪</span> ধাপ ১: আমদানি টেস্ট অর্ডার (১০০ কেজি)</h2>
+  <p class="lead">৫০০ কেজির বদলে ১০০ কেজি, যাতে ঝুঁকি কম থাকে। তবে ছোট চালানে কেজিপ্রতি খরচ বেশি পড়ে।</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>খাত</th><th class="num">মোট</th><th class="num">প্রতি কেজি</th></tr></thead>
+      <tbody>
+        <tr><td>পণ্যের দাম (১০০ × ৳২,৩৪৯)</td><td class="num">৳২,৩৪,৯০০</td><td class="num">৳২,৩৪৯</td></tr>
+        <tr><td>সমুদ্র ফ্রেইট (LCL ন্যূনতম ১ CBM), পোর্ট ও ডকুমেন্ট, ইন্স্যুরেন্স</td><td class="num">৳৪৬,০০০</td><td class="num">৳৪৬০</td></tr>
+        <tr><td>আমদানি শুল্ক ও কর (~৮৯%)</td><td class="num">৳২,৫০,০০০</td><td class="num">৳২,৫০০</td></tr>
+        <tr><td>C&amp;F, ল্যাব টেস্ট, ঢাকায় পরিবহন</td><td class="num">৳৪৩,০০০</td><td class="num">৳৪৩০</td></tr>
+        <tr><th>ঢাকায় মোট খরচ</th><th class="num">≈ ৳৫,৭৪,০০০</th><th class="num">≈ ৳৫,৭৪০</th></tr>
+        <tr><td>৫০ গ্রামের ২,০০০টি পাউচ ও লেবেল</td><td class="num">৳৪৮,০০০</td><td class="num"></td></tr>
+        <tr><th>মোট বিনিয়োগ</th><th class="num">≈ ৳৬.২ লাখ</th><th class="num">প্যাকপ্রতি ≈ ৳৩১১</th></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn"><b>সত্যি কথা:</b> ১০০ কেজির চালানে প্যাকপ্রতি খরচ ~৳৩১১। ৩ প্যাক ৳১,০৯৯-এ বেচলে নতুন কাস্টমারে সামান্য লস, রিপিট কাস্টমারে লাভ। পুরো ২,০০০ প্যাক বিক্রি হলে মোট ফলাফল মোটামুটি <b>সমান-সমান থেকে ~৳৬০ হাজার লস</b>। এটাকে বাজার যাচাইয়ের খরচ হিসেবে ধরুন: বদলে পাবেন আসল কাস্টমার তালিকা, অ্যাডের খরচের আসল হিসাব আর রিপিট রেট। ভরসা বেশি থাকলে ৩০০ কেজি নিলে প্যাকপ্রতি খরচ ~৳২৭১-এ নামে, তখন প্রথম অর্ডারেও সামান্য লাভ থাকে।</div>
+</section>
+
+<section id="family">
+  <h2><span class="n">৫</span> ধাপ ১খ: পারিবারিক ছোট সেটআপ (লাইন A)</h2>
+  <p class="lead">কম বিনিয়োগে শুরু, পরিবারের সদস্যরা প্রসেসিং চালাবেন। সফল হলে ধীরে ধীরে বড় করা।</p>
+  <div class="two">
+    <div class="tbl" style="margin-bottom:0">
+      <table style="min-width:0">
+        <thead><tr><th>যন্ত্রপাতি ও খরচ</th><th class="num">আনুমানিক</th></tr></thead>
+        <tbody>
+          <tr><td>২০-ট্রে স্টেইনলেস ফুড ডিহাইড্রেটর × ২</td><td class="num">৳৯০,০০০-১,০০,০০০</td></tr>
+          <tr><td>স্লাইসার (ম্যান্ডোলিন বা ছোট মেশিন)</td><td class="num">৳৫,০০০-১৫,০০০</td></tr>
+          <tr><td>সিলিং মেশিন (ইমপালস/ভ্যাকুয়াম)</td><td class="num">৳১০,০০০-২৫,০০০</td></tr>
+          <tr><td>ডিজিটাল স্কেল, থার্মোমিটার, আর্দ্রতা মাপার যন্ত্র</td><td class="num">৳৮,০০০</td></tr>
+          <tr><td>স্টেইনলেস টেবিল, পাত্র, ঘর পরিষ্কার-রং</td><td class="num">৳৪০,০০০-৬০,০০০</td></tr>
+          <tr><td>BFSA নিবন্ধন, ট্রেড লাইসেন্স, প্রথম ল্যাব টেস্ট</td><td class="num">৳২৫,০০০-৩৫,০০০</td></tr>
+          <tr><td>প্রথম পাউচ, লেবেল, কাঁচামাল</td><td class="num">৳২৫,০০০</td></tr>
+          <tr><th>মোট</th><th class="num">≈ ৳২-৩ লাখ</th></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="kpis" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+        <div class="kpi"><b>~২০ কেজি</b><span>প্রতি ব্যাচে তাজা ফল (প্রতি মেশিন)</span></div>
+        <div class="kpi"><b>~৩ কেজি</b><span>প্রতি ব্যাচে শুকনো ফল</span></div>
+        <div class="kpi"><b>~৬০ প্যাক</b><span>প্রতিদিন (১০০ গ্রাম, ২ মেশিন)</span></div>
+        <div class="kpi"><b>~১,৫০০</b><span>প্যাক প্রতি মাসে (২৫ দিন)</span></div>
+      </div>
+      <div class="callout info" style="margin-bottom:0"><b>কোন ফল দিয়ে শুরু:</b> কলা, আনারস, পেঁপে। সারা বছর পাওয়া যায়, সস্তা, শুকানো সহজ। আম মৌসুমে (মে-জুলাই) বেশি করে শুকিয়ে স্টক রাখুন। ঢেঁড়স আর পাতলা কাঁচকলা শুকালে কিছুটা মুচমুচে হয়।</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3 style="font-size:19px;margin-bottom:8px">পরিবার দিয়ে চালানোর নিয়ম</h3>
+    <ul class="checks">
+      <li><b>বাসার রান্নাঘরে নয়।</b> আলাদা ঘর, ধোয়া যায় এমন মেঝে ও টেবিল, জানালায় নেট। BFSA নিবন্ধন আর কাস্টমারের বিশ্বাস, দুটোর জন্যই দরকার।</li>
+      <li><b>লিখিত নিয়ম (SOP):</b> কত পাতলা কাটা, কত ডিগ্রিতে কত ঘণ্টা, আর্দ্রতা কত হলে প্যাক হবে। তাহলে যে-ই কাজ করুক, মান একই থাকবে।</li>
+      <li><b>পরিচ্ছন্নতা:</b> হেয়ার নেট, গ্লাভস, অ্যাপ্রন; প্রতিদিন পরিষ্কারের চেকলিস্ট।</li>
+      <li><b>প্রতিটি ব্যাচের খাতা:</b> তারিখ, ফল, ওজন, ব্যাচ নম্বর। প্যাকেটে ব্যাচ নম্বর আর মেয়াদ লেখা থাকবে।</li>
+      <li><b>পরিবারের শ্রমকে খরচ ধরুন</b> (৳৫০০/দিন/জন), টাকা না দিলেও। নাহলে কর্মী নিয়োগের সময় বোঝা যাবে না ব্যবসা আসলে লাভজনক কিনা।</li>
+      <li><b>শুরুতে ২-৩টি ফল, ৮টি নয়।</b> মান স্থির হলে তারপর নতুন ফল যোগ করুন।</li>
+    </ul>
+  </div>
+</section>
+
+<section id="lineA">
+  <h2><span class="n">৬</span> লাইন A-র দাম ও লাভ</h2>
+  <p class="lead">প্যাকপ্রতি খরচ ~৳৮৫ (১০০ গ্রাম)। নতুন কাস্টমার আনতে অ্যাড খরচ ~৳২০০/অর্ডার, রিটার্ন লস ~৳৫০, COD ১%। ৬ প্যাকে ফ্রি ডেলিভারি (~৳৯০)।</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>প্যাকেজ</th><th class="num">দাম</th><th class="num">খরচ</th><th class="num">নতুন কাস্টমার</th><th class="num">রিপিট কাস্টমার</th></tr></thead>
+      <tbody>
+        <tr><td>১ প্যাক (১০০ গ্রাম)</td><td class="num">৳২৯৯</td><td class="num">৳৮৫</td><td class="num neg">−৳৩৯</td><td class="num pos">+৳১৮৬</td></tr>
+        <tr><td>⭐ ৩ প্যাক (৩০০ গ্রাম)</td><td class="num">৳৭৯৯</td><td class="num">৳২৫৫</td><td class="num pos">+৳২৭৫ (৩৪%)</td><td class="num pos">+৳৫১১ (৬৪%)</td></tr>
+        <tr><td>৬ প্যাক (৬০০ গ্রাম) + ফ্রি ডেলিভারি</td><td class="num">৳১,৪৯৯</td><td class="num">৳৫১০</td><td class="num pos">+৳৬৩৪ (৪২%)</td><td class="num pos">+৳৮৫৯ (৫৭%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout info"><b>তুলনা:</b> লাইন C-তে ৩ প্যাকে নতুন কাস্টমারে লাভ মাত্র ~৳৫৮। লাইন A-তে একই অর্ডারে ~৳২৭৫, আর কাস্টমার পাচ্ছেন দ্বিগুণ পরিমাণ (১০০ গ্রাম প্যাক) কম দামে।</div>
+  <div class="callout warn"><b>মনে রাখুন:</b> ডিহাইড্রেটরে শুকানো ফল চিবিয়ে খাওয়ার মতো হয়, আমদানি করা চিপসের মতো মুচমুচে নয়। পেজে এটাকে "শুকনো ফল, চিনি ছাড়া" হিসেবে আলাদা করে দেখাতে হবে, "চিপস" বলা যাবে না। মুচমুচে দেশি চিপস আসবে ধাপ ৩-এ, ভ্যাকুয়াম ফ্রায়ার কেনার পর।</div>
+</section>
+
+<section id="gate">
+  <h2><span class="n">৭</span> পরের ধাপে যাওয়ার মাপকাঠি</h2>
+  <p class="lead">৩ মাস পর এই সংখ্যাগুলো দেখে সিদ্ধান্ত। সবগুলো পূরণ হলে ধাপ ২-এ যান।</p>
+  <div class="kpis">
+    <div class="kpi"><b>৩০০+</b><span>৩ মাসে মোট অর্ডার</span></div>
+    <div class="kpi"><b>≥২০%</b><span>কাস্টমার আবার অর্ডার করেছেন</span></div>
+    <div class="kpi"><b>≤৳২৫০</b><span>প্রতি নতুন অর্ডারে অ্যাড খরচ</span></div>
+    <div class="kpi"><b>≤১০%</b><span>ফেরত বা ক্যানসেল</span></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3 style="font-size:19px;margin-bottom:8px">ভ্যাকুয়াম ফ্রায়ার কেনার আগে (ধাপ ৩)</h3>
+    <p>ছোট ভ্যাকুয়াম ফ্রায়ারের (প্রতি ব্যাচে ~৮ কেজি কাঁচামাল) Alibaba-তে তালিকাভুক্ত দাম <b>$৮,০০০ থেকে $২০,০০০</b> (≈ ৳১০-২৫ লাখ)। এর সাথে জাহাজ ভাড়া, শুল্ক, স্থাপন, নাইট্রোজেন সিলার আর ঘর তৈরি যোগ হবে, মোট <b>≈ ৳১৫-৩৫ লাখ</b>। আগে যে ৳৮-১৫ লাখ বলেছিলাম, সেটা কম ছিল।</p>
+    <p style="margin:0">শর্ত: লাইন A টানা ৩ মাস প্রতি মাসে ১,০০০+ প্যাক বিক্রি, আর অন্তত ৩টি সাপ্লায়ারের লিখিত কোটেশন। কেনার আগে চীনে বা ভিডিও কলে মেশিন চালিয়ে দেখা আর স্যাম্পল ব্যাচ পরীক্ষা।</p>
+  </div>
+</section>
+
+<section id="license">
+  <h2><span class="n">৮</span> লাইসেন্স ও আইন</h2>
+  <div class="callout risk"><b>জরুরি:</b> ১ নভেম্বর ২০২৬ থেকে খাদ্য ব্যবসার জন্য BFSA (বাংলাদেশ নিরাপদ খাদ্য কর্তৃপক্ষ) নিবন্ধন বা লাইসেন্স বাধ্যতামূলক। নিবন্ধন ছাড়া ব্যবসা নিরাপদ খাদ্য আইন ২০১৩ অনুযায়ী শাস্তিযোগ্য। প্রতিটি প্যাকেটে BFSA নিবন্ধন নম্বর থাকতে হবে।</div>
+  <div class="card">
+    <ul class="checks">
+      <li>ট্রেড লাইসেন্স, TIN, BIN</li>
+      <li>BFSA নিবন্ধন: আমদানিকারক হিসেবে (লাইন C) আর প্রসেসর হিসেবে (লাইন A)। বাসা-ভিত্তিক ছোট উৎপাদকের জন্য আলাদা সহজ ক্যাটাগরি আছে কিনা, bfsa.gov.bd-তে দেখে নিতে হবে।</li>
+      <li>BSTI: আলুর চিপস (BDS 1927) বাধ্যতামূলক সার্টিফিকেশনের তালিকায় আছে বলে জানা যায়। ফল ও সবজির চিপস বা শুকনো ফল এর আওতায় পড়ে কিনা, bsti.gov.bd-তে নিশ্চিত হতে হবে।</li>
+      <li>IRC (আমদানি নিবন্ধন), লাইন C-র জন্য</li>
+      <li>বাংলা লেবেল: নাম, উপাদান, উৎপত্তির দেশ, নেট ওজন, ব্যাচ, উৎপাদন ও মেয়াদের তারিখ, MRP, BFSA নম্বর</li>
+      <li>দাবি: "অর্গানিক" নয় (সার্টিফিকেট ছাড়া)। "নিজস্ব খামার" শুধু সেসব ফলে, যা সত্যিই নিজেরা চাষ করেন।</li>
+    </ul>
+  </div>
+</section>
+
+<section id="risks">
+  <h2><span class="n">৯</span> প্রধান ঝুঁকি ও প্রতিকার</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>ঝুঁকি</th><th>প্রতিকার</th></tr></thead>
+      <tbody>
+        <tr><td>লাইন C-র ১০০ কেজি স্টক বিক্রি হলো না</td><td>মেয়াদ ১২ মাস, তাই সময় আছে। দোকান ও স্কুল ক্যান্টিনে পাইকারি বিক্রি, কম্বো অফার।</td></tr>
+        <tr><td>শুকনো ফলের মান ব্যাচভেদে আলাদা</td><td>লিখিত SOP, আর্দ্রতা মাপা, প্রতিটি ব্যাচ থেকে নমুনা রেখে দেওয়া।</td></tr>
+        <tr><td>বর্ষায় শুকনো ফল নরম হয়ে যায়, ছত্রাক ধরে</td><td>আর্দ্রতা নির্দিষ্ট মাত্রার নিচে না নামা পর্যন্ত প্যাক নয়; অক্সিজেন অ্যাবজর্বার দেওয়া জিপলক বা ফয়েল পাউচ।</td></tr>
+        <tr><td>মৌসুমে ফল না পাওয়া, দাম বেড়ে যাওয়া</td><td>২-৩ জন চুক্তিভিত্তিক কৃষক; মৌসুমে বেশি শুকিয়ে স্টক রাখা।</td></tr>
+        <tr><td>অ্যাডের খরচ প্রত্যাশার চেয়ে বেশি</td><td>রিপিট কাস্টমার (রিঅর্ডার কার্ড, WhatsApp ব্রডকাস্ট), মায়েদের ফেসবুক গ্রুপে স্যাম্পল দিয়ে রিভিউ।</td></tr>
+        <tr><td>লাইসেন্স ছাড়া বিক্রি করে ধরা পড়া</td><td>প্রথম বিক্রির আগেই BFSA নিবন্ধন আর ট্রেড লাইসেন্স।</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">১০</span> এখনই করণীয় (পরের ৩০ দিন)</h2>
+  <div class="card">
+    <ul class="checks">
+      <li>সাপ্লায়ারের কাছ থেকে ফ্রি স্যাম্পল আনা, মান যাচাই</li>
+      <li>C&amp;F এজেন্টের কাছ থেকে HS কোড আর শুল্কের লিখিত হিসাব</li>
+      <li>ট্রেড লাইসেন্স, BIN আর BFSA নিবন্ধনের আবেদন</li>
+      <li>বাসায় প্রসেসিংয়ের জন্য আলাদা ঘর ঠিক করা, ২টি ডিহাইড্রেটরের অর্ডার</li>
+      <li>কলা, আনারস, পেঁপে দিয়ে ১০টি পরীক্ষামূলক ব্যাচ; প্রতিটির ওজন, সময় আর ফলাফল লিখে রাখা</li>
+      <li>লাইন C-র ১০০ কেজি অর্ডার (স্যাম্পল পছন্দ হলে)</li>
+      <li>ল্যান্ডিং পেজে আসল WhatsApp নম্বর বসিয়ে লাইভ করা</li>
+    </ul>
+  </div>
+  <p class="src"><b>উৎস:</b>
+    <a href="https://www.alibaba.com/product-detail/OEM-Dried-Fruit-Mixed-Dehydrated-Vegetable_1601687643978.html">Alibaba প্রোডাক্ট লিস্টিং</a> ·
+    <a href="https://gelgoogs.en.alibaba.com/product/62193400942-807929574/Mini_Home_Vacuum_Fryer_Vegetable_and_Fruit_Chips_Vacuum_Frying_Equipment.html">ছোট ভ্যাকুয়াম ফ্রায়ার (Alibaba)</a> ·
+    <a href="https://www.alibaba.com/showroom/fruit-chips-vacuum-fry-machine.html">ভ্যাকুয়াম ফ্রায়ার তালিকা</a> ·
+    <a href="https://www.bdstall.com/details/20-tray-stainless-steel-automatic-food-dehydrator-163787/">২০-ট্রে ডিহাইড্রেটর (BDStall)</a> ·
+    <a href="https://www.bdstall.com/food-dehydrator/">ডিহাইড্রেটরের দাম ২০২৬</a> ·
+    <a href="https://thefinancialexpress.com.bd/trade/registration-licences-mandatory-for-food-businesses-from-nov-1">BFSA নিবন্ধন বাধ্যতামূলক (Financial Express)</a> ·
+    <a href="https://www.dhakatribune.com/bangladesh/422593/food-businesses-must-register-obtain-licences">Dhaka Tribune</a> ·
+    <a href="https://food.chemlinked.com/foodpedia/bangladesh-food-regulation">বাংলাদেশ খাদ্য বিধি (ChemLinked)</a> ·
+    <a href="https://nbr.gov.bd/uploads/sros/36.SRO-RD-2025-2026-New-22-05-2025_.pdf">NBR SRO</a> ·
+    <a href="https://nutrifreezefoods.com/">Nutri Freeze</a>
+  </p>
+</section>
+
+</main>
+<footer><div class="wrap">সবুজ ক্রাঞ্চ · সব খরচ আনুমানিক; লিখিত কোটেশন ও পাইলটের পর হালনাগাদ করতে হবে।</div></footer>
+</body>
+</html>
