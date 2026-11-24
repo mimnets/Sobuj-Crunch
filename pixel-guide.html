@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meta Pixel Setup Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&family=Baloo+Da+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: one reading column of numbered steps, each a card; code and tables scroll inside their own box. Light look matching the landing page. */
+  :root{
+    color-scheme: light;
+    --bg:#fbf7ef; --card:#fff; --ink:#1d241f; --muted:#5b665e; --line:#e6e1d4;
+    --green:#277a40; --green-d:#163d22; --green-l:#e6f2e8; --kraft:#c99a62; --meta:#1877f2;
+    --amber-l:#fff4d6; --red-l:#fdeceb;
+    --font-body:'Anek Bangla','Noto Sans Bengali',system-ui,sans-serif;
+    --font-display:'Baloo Da 2','Anek Bangla','Noto Sans Bengali',system-ui,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.65}
+  .wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  h1,h2,h3{font-family:var(--font-display);color:var(--green-d);line-height:1.25;margin:0;text-wrap:balance}
+  p{margin:0 0 10px}
+  header{background:var(--green-d);color:#fff;padding-block:36px 30px}
+  header .eyebrow{font-size:14px;color:#bcd6c1;letter-spacing:.4px}
+  header h1{color:#fff;font-size:clamp(28px,5vw,40px);margin:6px 0 8px}
+  header p{color:#d8e8db;margin:0;max-width:640px}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .flow span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:3px 12px;font-size:14px}
+  main{padding-block:24px 40px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px;position:relative}
+  .step h2{font-size:22px;display:flex;gap:12px;align-items:center;margin-bottom:10px}
+  .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:17px}
+  ol.sub,ul.sub{margin:6px 0 10px 22px;padding:0}
+  ol.sub li,ul.sub li{margin-bottom:6px}
+  .path{font-family:var(--font-mono);font-size:14.5px;background:#f3f1ea;border-radius:6px;padding:1px 6px;white-space:nowrap}
+  pre{background:#1d241f;color:#e7f1e9;border-radius:12px;padding:14px 16px;overflow-x:auto;font-family:var(--font-mono);font-size:14.5px;line-height:1.5;margin:8px 0 12px}
+  pre .hl{background:#d4621a;color:#fff;border-radius:4px;padding:0 4px}
+  .note{border-radius:12px;padding:12px 14px;font-size:15.5px;margin:10px 0 0}
+  .note.warn{background:var(--amber-l);border:1px solid #f0d58a}
+  .note.info{background:var(--green-l);border:1px solid #cfe3d1}
+  .note.risk{background:var(--red-l);border:1px solid #f3c7c3}
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:8px 0}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:15.5px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f6f3ec;color:var(--green-d)}
+  tr:last-child td{border-bottom:0}
+  code{font-family:var(--font-mono);font-size:14.5px;background:#f3f1ea;border-radius:5px;padding:0 5px}
+  .check{list-style:none;padding:0;margin:6px 0 0}
+  .check li{padding:5px 0 5px 28px;position:relative}
+  .check li::before{content:"☐";position:absolute;left:2px;top:3px;color:var(--green);font-size:18px}
+  a{color:var(--green)}
+  a:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  footer{color:var(--muted);font-size:14px;text-align:center;padding-block:10px 40px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">সবুজ ক্রাঞ্চ · অ্যাড সেটআপ গাইড</div>
+    <h1>Meta Pixel সেটআপ: ধাপে ধাপে</h1>
+    <p>ল্যান্ডিং পেজে কে ঢুকছে, কে প্যাকেজ বাছছে, কে অর্ডার দিচ্ছে, Facebook যেন তা জানতে পারে। তাহলে অ্যাড ঠিক সেই ধরনের মানুষদের দেখানো হবে, যারা আসলে কেনে।</p>
+    <div class="flow"><span>১ Pixel তৈরি</span><span>২ ID বসানো</span><span>৩ পেজ লাইভ</span><span>৪ টেস্ট</span><span>৫ ডোমেইন যাচাই</span><span>৬ অ্যাড চালু</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="note warn" style="margin:0 0 16px"><b>আগে জেনে রাখুন:</b> Meta মাঝে মাঝে মেনুর নাম বদলায়। এখন "Pixel"-কে অনেক জায়গায় <b>"Dataset"</b> বলা হয়, দুটো একই জিনিস। কোনো বাটন হুবহু না পেলে কাছাকাছি নামের অপশন খুঁজুন।</div>
+
+<section class="step">
+  <h2><span class="num">০</span>যা যা আগে লাগবে</h2>
+  <ul class="check">
+    <li>সবুজ ক্রাঞ্চের একটি <b>Facebook Page</b></li>
+    <li><b>Meta Business Portfolio</b> (আগের নাম Business Manager): <a href="https://business.facebook.com">business.facebook.com</a>-এ গিয়ে তৈরি করুন</li>
+    <li>একটি <b>Ad Account</b>, সাথে পেমেন্ট মেথড (ডুয়াল-কারেন্সি কার্ড বা অ্যাড এজেন্সি)</li>
+    <li><b>লাইভ ওয়েবসাইট:</b> নিজের ডোমেইনে আপলোড করা ল্যান্ডিং পেজ, যেমন <code>sobujcrunch.com</code>। Claude-এর প্রিভিউ লিংকে Pixel কাজ করবে না।</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2><span class="num">১</span>Pixel (Dataset) তৈরি করুন</h2>
+  <ol class="sub">
+    <li><a href="https://business.facebook.com/events_manager2">Events Manager</a> খুলুন</li>
+    <li>বাম পাশে <span class="path">Connect data sources</span> (বা সবুজ <b>+</b> চিহ্ন) চাপুন</li>
+    <li><span class="path">Web</span> বেছে নিয়ে <span class="path">Connect</span> চাপুন</li>
+    <li>নাম দিন: <b>Sobuj Crunch Pixel</b> → <span class="path">Create</span></li>
+    <li>ওয়েবসাইটের ঠিকানা চাইলে আপনার ডোমেইন দিন</li>
+    <li>ইনস্টলের অপশন এলে <span class="path">Install code manually</span> বেছে নিন</li>
+    <li>স্ক্রিনে বা Dataset-এর <span class="path">Settings</span>-এ একটি <b>১৫-১৬ সংখ্যার নম্বর</b> দেখাবে। এটাই আপনার <b>Pixel ID</b>। কপি করে রাখুন।</li>
+  </ol>
+  <div class="note info">পুরো কোড কপি করার দরকার নেই। আমাদের পেজে Pixel-এর কোড আগেই বসানো আছে, শুধু ID-টা লাগবে।</div>
+</section>
+
+<section class="step">
+  <h2><span class="num">২</span>ল্যান্ডিং পেজে ID বসান</h2>
+  <p><code>index.html</code> ফাইলটি যেকোনো টেক্সট এডিটরে (Notepad, VS Code) খুলুন। একদম উপরের দিকে এই লাইনটা পাবেন:</p>
+<pre>const META_PIXEL_ID = '<span class="hl">YOUR_PIXEL_ID</span>';</pre>
+  <p>শুধু <code>YOUR_PIXEL_ID</code> মুছে আপনার নম্বর বসান। উদ্ধৃতি চিহ্ন (<code>'</code>) রেখে দিন:</p>
+<pre>const META_PIXEL_ID = '<span class="hl">1234567890123456</span>';</pre>
+  <div class="note warn">উপরের নম্বরটা উদাহরণ মাত্র। ID না বসানো পর্যন্ত পেজের Pixel কোড ইচ্ছা করেই বন্ধ থাকে, তাই ভুল ডেটা যাবে না।</div>
+</section>
+
+<section class="step">
+  <h2><span class="num">৩</span>পেজ লাইভ করুন</h2>
+  <p><code>index.html</code> আর <code>images</code> ফোল্ডারটা আপনার হোস্টিংয়ে আপলোড করুন (cPanel File Manager, Netlify, Hostinger ইত্যাদি)। একই সাথে নিশ্চিত করুন:</p>
+  <ul class="check">
+    <li><code>WHATSAPP_NUMBER</code>-এ আসল নম্বর বসানো হয়েছে (এখন ডামি <code>01712345678</code> আছে)</li>
+    <li>ফুটারে আসল ফোন নম্বর</li>
+    <li>সাইট <code>https://</code> দিয়ে খোলে (SSL চালু)</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2><span class="num">৪</span>Pixel কাজ করছে কিনা টেস্ট করুন</h2>
+  <p>পেজে যে ইভেন্টগুলো আগে থেকেই সেট করা আছে:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>ইভেন্ট</th><th>কখন ফায়ার হয়</th><th>কী বোঝায়</th></tr></thead>
+    <tbody>
+      <tr><td><code>PageView</code></td><td>পেজ খুললেই</td><td>কতজন ভিজিটর এল</td></tr>
+      <tr><td><code>ViewContent</code></td><td>দামের সেকশন পর্যন্ত স্ক্রল করলে</td><td>আগ্রহী ভিজিটর</td></tr>
+      <tr><td><code>AddToCart</code></td><td>কোনো প্যাকেজের "এটা নেব" চাপলে</td><td>প্যাকেজ বেছেছে (দামসহ)</td></tr>
+      <tr><td><code>InitiateCheckout</code></td><td>অর্ডার ফর্মে প্রথম ক্লিক বা টাইপ করলে</td><td>কেনার প্রক্রিয়া শুরু</td></tr>
+      <tr><td><code>Lead</code></td><td>"অর্ডার কনফার্ম করুন" চাপলে (WhatsApp খোলার আগে)</td><td><b>অর্ডার রিকোয়েস্ট এসেছে</b> (মোট টাকাসহ)</td></tr>
+    </tbody>
+  </table></div>
+  <ol class="sub">
+    <li>Chrome-এ <a href="https://chromewebstore.google.com/search/Meta%20Pixel%20Helper">Meta Pixel Helper</a> এক্সটেনশন ইনস্টল করুন</li>
+    <li>আপনার লাইভ পেজ খুলুন। এক্সটেনশনের আইকনে আপনার Pixel ID আর <code>PageView</code> দেখাবে।</li>
+    <li>Events Manager → আপনার Dataset → <span class="path">Test events</span> ট্যাবে সাইটের ঠিকানা দিয়ে <span class="path">Open website</span> চাপুন</li>
+    <li>খোলা পেজে স্ক্রল করুন, একটা প্যাকেজ বাছুন, ফর্ম পূরণ করে কনফার্ম চাপুন। Test events-এ উপরের ৫টি ইভেন্ট একে একে দেখা যাবে।</li>
+  </ol>
+  <div class="note info">টেস্ট অর্ডারগুলো WhatsApp-এ আপনার কাছেই আসবে। পরে মুছে দিন, যাতে আসল অর্ডারের সাথে না মেশে।</div>
+</section>
+
+<section class="step">
+  <h2><span class="num">৫</span>ডোমেইন যাচাই (Domain verification)</h2>
+  <ol class="sub">
+    <li><span class="path">Business settings</span> → <span class="path">Brand safety and suitability</span> (বা <span class="path">Brand safety</span>) → <span class="path">Domains</span> → <span class="path">Add</span></li>
+    <li>আপনার ডোমেইন লিখুন, যেমন <code>sobujcrunch.com</code></li>
+    <li>যাচাইয়ের দুটো সহজ উপায়:
+      <ul class="sub">
+        <li><b>Meta-tag:</b> Meta যে <code>&lt;meta name="facebook-domain-verification" …&gt;</code> লাইনটা দেবে, সেটা <code>index.html</code>-এর <code>&lt;head&gt;</code>-এর ভেতরে বসিয়ে আবার আপলোড করুন</li>
+        <li><b>DNS TXT:</b> ডোমেইন প্যানেলে (Namecheap, GoDaddy ইত্যাদি) Meta-র দেওয়া TXT রেকর্ড যোগ করুন</li>
+      </ul>
+    </li>
+    <li><span class="path">Verify</span> চাপুন</li>
+    <li>Events Manager-এ ইভেন্ট সাজানোর (Aggregated Event Measurement) অপশন দেখালে <code>Lead</code>-কে সবার উপরে রাখুন</li>
+  </ol>
+</section>
+
+<section class="step">
+  <h2><span class="num">৬</span>Pixel দিয়ে অ্যাড চালান</h2>
+  <ol class="sub">
+    <li><a href="https://adsmanager.facebook.com">Ads Manager</a> → <span class="path">Create</span></li>
+    <li>Objective: <b>Leads</b> (অথবা <b>Sales</b>)</li>
+    <li>Conversion location: <b>Website</b>, Dataset: <b>Sobuj Crunch Pixel</b>, Conversion event: <b>Lead</b></li>
+    <li>Audience: বয়স ২৪-৪৫; লোকেশন শুরুতে ঢাকা ও চট্টগ্রাম শহর; আগ্রহ যেমন parenting, healthy eating, fitness, snacks</li>
+    <li>Placement: Advantage+ (অটোমেটিক) রাখুন</li>
+    <li>বাজেট: দিনে <b>৳৫০০-১,০০০</b> দিয়ে শুরু করুন। প্রথম ৫-৭ দিন অ্যাড এডিট করবেন না, কারণ তখন Facebook শিখছে (learning phase)।</li>
+    <li>Ad-এর লিংক: আপনার ল্যান্ডিং পেজ। মূল অফার দেখান <b>৩ প্যাক ৳১,০৯৯</b>।</li>
+  </ol>
+  <div class="note warn"><b>ইভেন্ট কম হলে:</b> সপ্তাহে ~৫০টির কম <code>Lead</code> হলে Facebook ভালোভাবে শিখতে পারে না। শুরুতে Conversion event হিসেবে <code>InitiateCheckout</code> দিন, অর্ডার বাড়লে <code>Lead</code>-এ বদলান।</div>
+</section>
+
+<section class="step">
+  <h2><span class="num">৭</span>আসল বিক্রি আলাদা করে গুনুন</h2>
+  <p>পেজের <code>Lead</code> মানে কেউ অর্ডার পাঠিয়েছেন। কিন্তু সব Lead ফোনে কনফার্ম বা ডেলিভারি হয় না। তাই একটা Google Sheet রাখুন:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>তারিখ</th><th>নাম</th><th>মোবাইল</th><th>প্যাকেজ</th><th>টাকা</th><th>কনফার্ম?</th><th>ডেলিভারি?</th><th>রিপিট?</th></tr></thead>
+    <tbody><tr><td>২৫/১১</td><td>…</td><td>…</td><td>৩ প্যাক</td><td>৳১,১৬৯</td><td>হ্যাঁ</td><td>হ্যাঁ</td><td>না</td></tr></tbody>
+  </table></div>
+  <p>প্রতি সপ্তাহে হিসাব করুন: <b>অ্যাড খরচ ÷ ডেলিভারি হওয়া অর্ডার = আসল খরচ প্রতি অর্ডার।</b> প্ল্যান অনুযায়ী লক্ষ্য ≤ ৳২৫০।</p>
+  <div class="note info">পরে চাইলে এই শিট থেকে কনফার্ম হওয়া অর্ডারগুলো <b>Offline events</b> বা <b>Conversions API</b> দিয়ে Meta-তে "Purchase" হিসেবে পাঠানো যায়। তখন Facebook আরও নিখুঁতভাবে আসল ক্রেতা খুঁজবে। শুরুতে এটা জরুরি নয়।</div>
+</section>
+
+<section class="step">
+  <h2><span class="num">৮</span>প্রাইভেসি ও সমস্যা সমাধান</h2>
+  <div class="note risk" style="margin-top:0"><b>প্রাইভেসি নীতি:</b> Pixel ব্যবহার করলে Meta-র নিয়ম অনুযায়ী সাইটে একটি প্রাইভেসি নোটিশ রাখা উচিত। তাতে লিখুন: আমরা অ্যাডের জন্য Meta Pixel ব্যবহার করি, আর অর্ডারের তথ্য শুধু ডেলিভারির জন্য রাখি। চাইলে আমি এটা লিখে ফুটারে লিংক করে দিতে পারি।</div>
+  <div class="tbl"><table>
+    <thead><tr><th>সমস্যা</th><th>সমাধান</th></tr></thead>
+    <tbody>
+      <tr><td>Pixel Helper-এ কিছু দেখাচ্ছে না</td><td>ID ঠিকমতো বসেছে কিনা দেখুন (শুধু সংখ্যা, উদ্ধৃতির ভেতরে)। ফাইল আবার আপলোড করে ব্রাউজারে Ctrl+F5 চাপুন।</td></tr>
+      <tr><td>শুধু PageView আসছে, Lead আসছে না</td><td>ফর্ম পুরো পূরণ করে কনফার্ম চাপুন। ভুল নম্বর বা অসম্পূর্ণ ঠিকানা থাকলে ফর্ম জমা হয় না, তাই Lead-ও যায় না।</td></tr>
+      <tr><td>Ad blocker থাকলে ইভেন্ট যায় না</td><td>এটা স্বাভাবিক, কিছু ভিজিটর মিস হবেই। আসল হিসাব Google Sheet থেকে নিন।</td></tr>
+      <tr><td>ডোমেইন যাচাই হচ্ছে না</td><td>meta-tag ঠিক <code>&lt;head&gt;</code>-এর ভেতরে আছে কিনা দেখুন; DNS হলে ২৪ ঘণ্টা পর্যন্ত অপেক্ষা করুন।</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</main>
+<footer class="wrap">সবুজ ক্রাঞ্চ · Meta-র মেনুর নাম সময়ের সাথে বদলাতে পারে; Meta Business Help Center-এ সর্বশেষ নির্দেশনা দেখে নিন।</footer>
+</body>
+</html>

@@ -8,7 +8,21 @@
 <meta property="og:title" content="সবুজ ক্রাঞ্চ — ফল ও সবজির মুচমুচে চিপস">
 <meta property="og:image" content="images/banner.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29c0-9 3-15 12-21-11 0-18 6-18 14 0 3 1 5 2 7z' fill='%23277a40'/%3E%3Cpath d='M14 29C14 21 10 16 4 13c1 8 4 13 10 16z' fill='%237fb35a'/%3E%3C/svg%3E">
-<!-- TODO: Facebook/Meta Pixel কোড এখানে বসান (Events Manager থেকে কপি করে) -->
+<!-- Meta Pixel: নিচে META_PIXEL_ID-তে আপনার Pixel/Dataset ID বসান। ID না বসালে কোডটি কিছুই লোড করবে না। -->
+<script>
+  const META_PIXEL_ID = 'YOUR_PIXEL_ID';
+  if (/^\d{10,20}$/.test(META_PIXEL_ID)) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
+  }
+  // Safe wrapper: does nothing until the Pixel is set up
+  window.track = (ev, data) => { if (window.fbq) fbq('track', ev, data || {}); };
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&family=Baloo+Da+2:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -222,11 +236,33 @@
   .bd-list li.total{grid-template-columns:1fr auto;border-bottom:0;border-top:2px solid var(--green-900);margin-top:4px;padding-top:10px;font-weight:700;font-size:18px}
   .fresh{margin-top:26px;background:var(--green-50);border-radius:12px;padding:18px 20px}
   .fresh h4{font-family:var(--font-display);color:var(--green-900);font-size:19px;margin-bottom:12px}
-  .fresh-row{display:grid;grid-template-columns:200px 1fr 92px;gap:12px;align-items:center;margin-bottom:8px;font-size:15px}
-  .fresh-row .fbar{height:12px;width:var(--w);background:#9cc79f;border-radius:4px}
-  .fresh-row .fbar.dark{background:var(--green-600)}
-  .fresh-row b{font-family:var(--font-display);color:var(--green-900);text-align:right}
-  .fresh p{color:var(--muted);font-size:15px;margin-top:8px}
+  .fresh p{color:var(--muted);font-size:15px;margin-top:12px}
+  .f-row{display:grid;grid-template-columns:36px 190px 1fr 96px;gap:12px;align-items:center}
+  .f-ic{width:36px;height:36px;border-radius:10px;background:#fff;border:1px solid #cfe3d1;display:grid;place-items:center}
+  .f-ic svg{width:20px;height:20px;fill:none;stroke:var(--green-600);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .f-l{font-size:15px}
+  .f-track{height:14px;background:rgba(39,122,64,.08);border-radius:99px;overflow:hidden}
+  .f-track i{display:block;height:100%;width:var(--w);border-radius:99px;background:linear-gradient(90deg,#9cc79f,#7fb35a);transform-origin:left center}
+  .f-row.final .f-track i{background:linear-gradient(90deg,var(--green-600),var(--green-700))}
+  .f-row.final .f-ic{background:var(--green-600);border-color:var(--green-600)}
+  .f-row.final .f-ic svg{stroke:#fff}
+  .f-row b{font-family:var(--font-display);color:var(--green-900);text-align:right;font-size:17px}
+  .f-row.final b{color:var(--green-600);font-size:20px}
+  .f-step{padding:4px 0 4px 6px}
+  .f-step span{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:#9a5b1e;background:#fdf0e6;border:1px dashed #e7b98a;border-radius:99px;padding:1px 10px 1px 6px}
+  .f-step svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  /* animation (armed only when the block starts off-screen; text never moves) */
+  .fresh.armed .f-track i{transform:scaleX(0)}
+  .fresh.armed .f-step span{opacity:0;transform:scale(.7)}
+  .fresh.armed.go .f-track i{transform:scaleX(1);transition:transform .9s cubic-bezier(.2,.7,.3,1)}
+  .fresh.armed.go .f-row:nth-of-type(1) .f-track i{transition-delay:.1s}
+  .fresh.armed.go .f-row:nth-of-type(3) .f-track i{transition-delay:.9s}
+  .fresh.armed.go .f-row:nth-of-type(5) .f-track i{transition-delay:1.7s}
+  .fresh.armed.go .f-step span{opacity:1;transform:none;transition:opacity .35s ease,transform .35s cubic-bezier(.3,1.6,.5,1)}
+  .fresh.armed.go .f-step:nth-of-type(2) span{transition-delay:.7s}
+  .fresh.armed.go .f-step:nth-of-type(4) span{transition-delay:1.5s}
+  @keyframes finalGlow{0%,100%{box-shadow:0 0 0 0 rgba(39,122,64,0)}50%{box-shadow:0 0 0 6px rgba(39,122,64,.18)}}
+  .fresh.go .f-row.final .f-ic{animation:finalGlow 2.4s ease-in-out 2.6s 3}
   .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
   .why-grid div{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
   .why-grid b{display:block;color:var(--green-900);font-size:16px}
@@ -234,8 +270,11 @@
   .bd-note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
   @media (max-width:720px){
     .breakdown{padding:20px 16px}
-    .fresh-row{grid-template-columns:1fr 80px}
-    .fresh-row .fl{grid-column:1/-1;margin-bottom:-6px}
+    .f-row{grid-template-columns:34px 1fr auto;row-gap:6px;column-gap:10px}
+    .f-row .f-track{grid-column:2/-1}
+    .f-row b{grid-row:1;grid-column:3}
+    .f-ic{grid-row:span 2}
+    .f-step{padding-left:40px}
     .why-grid{grid-template-columns:1fr 1fr}
   }
   .guarantee{display:flex;gap:22px;align-items:center;max-width:860px;margin:36px auto 0;background:var(--green-50);border:2px solid var(--green-600);border-radius:var(--radius);padding:22px 26px}
@@ -327,10 +366,174 @@
   /* ---- scroll-in lift (transform only, content always visible) ---- */
   @supports (animation-timeline: view()){
     @keyframes liftIn{from{transform:translateY(28px) scale(.98)}to{transform:none}}
-    .card,.who>div,.review,.pack,.breakdown,.guarantee,.table{animation:liftIn linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+    .card,.who>div,.pack,.nut,.nf{animation:liftIn linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
     .pack.pop{animation:liftIn linear both,popGlow 3s ease-in-out infinite;animation-timeline:view(),auto;animation-range:entry 0% entry 60%,normal}
   }
-  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  /* ---- wavy section dividers: each wave is painted in the previous section's colour ---- */
+  .wave{position:relative}
+  .wave::before{content:"";position:absolute;left:0;right:0;top:-1px;height:42px;background-repeat:no-repeat;background-size:100% 100%;pointer-events:none}
+  section.benefits.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23fbf7ef'/%3E%3C/svg%3E")}
+  section.compare.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23fbf7ef'/%3E%3C/svg%3E")}
+  section#quality.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23f4e8d8'/%3E%3C/svg%3E")}
+  section.pricing.wave::before{display:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23fbf7ef'/%3E%3C/svg%3E")}
+  section.faq.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23fbf7ef'/%3E%3C/svg%3E")}
+  section.order.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23f3f8f1'/%3E%3C/svg%3E")}
+  /* ---- 1. floating chips in the hero ---- */
+  .hero .wrap{z-index:1}
+  .floaties{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .fl{position:absolute;filter:drop-shadow(0 6px 8px rgba(60,40,10,.18));animation:drift 9s ease-in-out infinite}
+  .f1{width:46px;left:51%;top:12%;animation-duration:9s}
+  .f2{width:40px;left:55%;top:66%;animation-duration:11s;animation-delay:-3s}
+  .f3{width:36px;left:60%;top:32%;animation-duration:10s;animation-delay:-5s}
+  .f4{width:62px;left:50%;top:86%;animation-duration:12s;animation-delay:-2s}
+  .f5{width:34px;left:64%;top:8%;animation-duration:8s;animation-delay:-6s}
+  .f6{width:42px;left:93%;top:70%;animation-duration:13s;animation-delay:-4s}
+  @keyframes drift{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(8px,-14px) rotate(12deg)}50%{transform:translate(-6px,-24px) rotate(-8deg)}75%{transform:translate(-10px,-8px) rotate(6deg)}}
+  @media (max-width:720px){.floaties{bottom:auto;height:260px;top:120px}.f1{left:6%;top:4%}.f2{left:82%;top:10%}.f3{left:86%;top:70%}.f4{left:2%;top:78%}.f5,.f6{display:none}}
+  /* ---- 2. package pick feedback ---- */
+  @keyframes pickFlash{0%{box-shadow:0 0 0 0 rgba(39,122,64,.6)}100%{box-shadow:0 0 0 18px rgba(39,122,64,0)}}
+  .pack.picked{animation:pickFlash .7s ease-out}
+  .pack.picked .btn{background:var(--green-600);color:#fff;border-color:var(--green-600)}
+  @keyframes labelPop{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}
+  .pack-pick label.flash{animation:labelPop .5s ease 2}
+  /* ---- 3. live total ---- */
+  @keyframes savePop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+  #sumSave,#sumTot{display:inline-block}
+  .pop-now{animation:savePop .45s ease}
+  /* ---- 4. success celebration ---- */
+  .thanks{position:relative;overflow:hidden}
+  .check{width:84px;height:84px;margin:0 auto 6px;display:block}
+  .check circle{fill:none;stroke:var(--green-600);stroke-width:4;stroke-dasharray:240;stroke-dashoffset:240}
+  .check path{fill:none;stroke:var(--green-600);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60}
+  .thanks.play .check circle{animation:draw .6s ease forwards}
+  .thanks.play .check path{animation:draw .4s ease .5s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .confetti{position:absolute;left:50%;top:60px;width:10px;height:14px;border-radius:0 70% 0 70%;pointer-events:none;animation:burst 1.4s cubic-bezier(.2,.7,.3,1) forwards}
+  @keyframes burst{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+  /* ---- 6. breakdown bar fills in (armed only when it starts off-screen) ---- */
+  .seg-bar.armed .seg{transform:scaleX(0);transform-origin:left center}
+  .seg-bar.armed.go .seg{transform:scaleX(1);transition:transform .7s cubic-bezier(.2,.7,.3,1)}
+  .seg-bar.armed.go .seg:nth-child(2){transition-delay:.25s}
+  .seg-bar.armed.go .seg:nth-child(3){transition-delay:.5s}
+  .seg-bar.armed.go .seg:nth-child(4){transition-delay:.65s}
+  .seg-bar.armed.go .seg:nth-child(5){transition-delay:.8s}
+  .seg-bar.armed.go .seg:nth-child(6){transition-delay:1.05s}
+  /* ---- nutrition ---- */
+  .nutrition{background:var(--cream)}
+  section.nutrition.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23ffffff'/%3E%3C/svg%3E")}
+  .nut-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .nut{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px;transition:transform .2s ease,box-shadow .2s ease}
+  .nut:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .nut i{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--c);margin-right:8px;vertical-align:-1px;box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
+  .nut b{font-family:var(--font-display);font-size:19px;color:var(--green-900)}
+  .nut-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .nut-tags span{font-size:14px;background:var(--green-50);border:1px solid #dcebdc;color:var(--green-700);padding:2px 10px;border-radius:99px}
+  .nut-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  .nf{position:relative;overflow:hidden;background:linear-gradient(165deg,var(--nt) 0%,#fff 70%);border:1px solid color-mix(in srgb,var(--nc) 22%,#fff);border-radius:18px;padding:22px 18px 18px;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
+  .nf::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:color-mix(in srgb,var(--nc) 10%,transparent);transition:transform .4s ease}
+  .nf:hover{transform:translateY(-5px);box-shadow:0 14px 30px color-mix(in srgb,var(--nc) 18%,transparent)}
+  .nf:hover::after{transform:scale(1.25)}
+  .nf-ic{position:relative;z-index:1;width:52px;height:52px;border-radius:16px;background:var(--nc);display:grid;place-items:center;box-shadow:0 8px 16px color-mix(in srgb,var(--nc) 30%,transparent);margin-bottom:14px;transition:transform .3s ease}
+  .nf:hover .nf-ic{transform:rotate(-8deg) scale(1.06)}
+  .nf-ic svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .nf-k{position:relative;z-index:1;font-size:13px;font-weight:600;letter-spacing:.3px;color:var(--nc)}
+  .nf h3{position:relative;z-index:1;font-size:22px;margin:0 0 6px;color:var(--green-900)}
+  .nf p{position:relative;z-index:1;font-size:15px;color:var(--muted);margin:0 0 14px;flex:1}
+  .nf-src{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;border-top:1px dashed color-mix(in srgb,var(--nc) 30%,#fff);padding-top:12px}
+  .nf-src small{width:100%;font-size:12.5px;color:var(--muted)}
+  .nf-src span{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:2px 9px 2px 6px}
+  .nf-src i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+  .nut-note{font-size:14px;color:var(--muted);margin-top:20px;max-width:860px}
+  @media (max-width:900px){.nut-grid,.nut-facts{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.nut-grid,.nut-facts{grid-template-columns:1fr}}
+  /* ---- factory partner ---- */
+  .factory{background:var(--white)}
+  section.factory.wave::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V18C1260 46 1080 6 900 22S540 44 360 20 120 8 0 26Z' fill='%23fbf7ef'/%3E%3C/svg%3E")}
+  .fac-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .fac-stats div{background:var(--green-50);border:1px solid #dcebdc;border-radius:14px;padding:16px 10px;text-align:center;transition:transform .2s ease}
+  .fac-stats div:hover{transform:translateY(-3px)}
+  .fac-stats b{display:block;font-family:var(--font-display);font-size:26px;color:var(--green-900);line-height:1.2}
+  .fac-stats span{font-size:14px;color:var(--muted)}
+  .fac-steps{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+  .fac-steps li{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-weight:500;transition:border-color .2s ease,transform .2s ease}
+  .fac-steps li:hover{border-color:var(--green-600);transform:translateY(-2px)}
+  .fac-steps svg{width:20px;height:20px;fill:none;stroke:var(--green-600);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .fac-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+  .fac-trust div{border:1px dashed var(--kraft);border-radius:12px;padding:14px 16px}
+  .fac-trust b{display:block;color:var(--green-900);font-size:17px}
+  .fac-trust span{font-size:15px;color:var(--muted)}
+  @media (max-width:900px){.fac-stats{grid-template-columns:repeat(2,1fr)}.fac-trust{grid-template-columns:1fr}}
+  @media (max-width:520px){.fac-stats{grid-template-columns:1fr 1fr}}
+  /* ================= MOBILE-FIRST REFINEMENTS (phones ≤ 720px) ================= */
+  .submit-btn{flex-wrap:wrap;column-gap:10px;row-gap:0}
+  .bt-tot{font-size:.9em;opacity:.95}
+  @media (max-width:720px){
+    section{padding:44px 0}
+    .wrap{padding:0 16px}
+    .topbar{font-size:13px;padding:6px 10px}
+    .tb-more{display:none}
+    /* hero */
+    .floaties{display:none}
+    .hero h1{font-size:30px}
+    .hero p.lead{font-size:16.5px;margin-bottom:16px}
+    .hero-points{gap:6px 10px}
+    .hero .eq{font-size:13.5px;margin-top:-4px}
+    .price-note{font-size:14px}
+    .hero-ctas{display:grid;grid-template-columns:1fr;gap:10px}
+    .hero-ctas .btn{width:100%;padding:14px 16px}
+    .trust .wrap{gap:12px 8px}
+    .trust b{font-size:17px}
+    .trust span{font-size:12.5px}
+    /* section heads */
+    h2{font-size:25px}
+    .sub{font-size:15.5px;margin-bottom:24px}
+    /* benefit cards: icon left, text right, compact */
+    .cards{gap:12px}
+    .card{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:16px;align-items:start}
+    .card .ic{width:44px;height:44px;margin:0;grid-row:span 2}
+    .card h3{font-size:18px;margin:0 0 2px}
+    .card p{font-size:15px}
+    /* who cards: tighter */
+    .who{gap:10px}
+    .who>div{padding:16px 12px}
+    .who p{font-size:14px}
+    /* nutrition: two-up ingredient tiles */
+    .nut-grid{grid-template-columns:1fr 1fr;gap:10px}
+    .nut{padding:12px}
+    .nut b{font-size:17px}
+    .nut-tags{gap:4px;margin-top:8px}
+    .nut-tags span{font-size:12.5px;padding:1px 8px}
+    /* nutrient explainer cards: icon left, compact */
+    .nut-facts{grid-template-columns:1fr;gap:12px}
+    .nf{display:grid;grid-template-columns:48px 1fr;column-gap:14px;padding:16px}
+    .nf-ic{width:48px;height:48px;border-radius:14px;margin:0;grid-row:span 3}
+    .nf h3{font-size:19px}
+    .nf p{margin-bottom:10px}
+    .nf-src{grid-column:1/-1}
+    .nut-note{font-size:13px}
+    /* factory */
+    .fac-stats{grid-template-columns:1fr 1fr;gap:10px}
+    .fac-stats b{font-size:22px}
+    .fac-steps li{padding:6px 12px;font-size:14.5px}
+    /* pricing: most popular first */
+    .packs{gap:22px}
+    .pack.pop{order:-1}
+    .pack{padding:22px 18px}
+    .pack ul{margin:12px 0 16px}
+    .delivery{flex-direction:column;align-items:center;gap:4px;font-size:14.5px;margin-top:20px}
+    .breakdown{padding:20px 14px}
+    .breakdown h3{font-size:21px}
+    /* review offer */
+    .ro-badge{width:90px;height:90px;font-size:28px}
+    /* order */
+    .how{gap:8px}
+    .how li{padding:10px;font-size:14px}
+    .submit-btn{font-size:18px;padding:14px 12px;line-height:1.35}
+    .bt-tot{flex-basis:100%;font-size:16px}
+    footer{font-size:14px}
+    .sticky-cta .t span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;max-width:52vw}
+  }
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.check circle,.check path{stroke-dashoffset:0}}
   footer{background:#0f2a18;color:#a9c4ae;padding:30px 0 90px;font-size:15px;text-align:center}
   footer a{color:#fff}
 
@@ -372,7 +575,7 @@
 </head>
 <body>
 
-<div class="topbar">🚚 সারা বাংলাদেশে ক্যাশ অন ডেলিভারি · ৬ প্যাকের কম্বোতে ডেলিভারি চার্জ ফ্রি</div>
+<div class="topbar">🚚 সারা দেশে ক্যাশ অন ডেলিভারি<span class="tb-more"> · ৬ প্যাকের কম্বোতে ডেলিভারি চার্জ ফ্রি</span></div>
 
 <header>
   <div class="wrap">
@@ -386,6 +589,14 @@
 
 <!-- HERO -->
 <section class="hero">
+    <div class="floaties" aria-hidden="true">
+      <svg class="fl f1" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#f3e3a3" stroke="#d9be6b" stroke-width="2"/><circle cx="20" cy="20" r="6" fill="none" stroke="#c9a85a" stroke-width="1.5" stroke-dasharray="2 3"/></svg>
+      <svg class="fl f2" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#8fbf3f" stroke="#6b8f2a" stroke-width="2"/><circle cx="20" cy="20" r="11" fill="#b9dc6a"/><circle cx="20" cy="20" r="4" fill="#f4f1d0"/><g fill="#2d2a1f"><circle cx="20" cy="12" r="1.2"/><circle cx="27" cy="16" r="1.2"/><circle cx="27" cy="24" r="1.2"/><circle cx="20" cy="28" r="1.2"/><circle cx="13" cy="24" r="1.2"/><circle cx="13" cy="16" r="1.2"/></g></svg>
+      <svg class="fl f3" viewBox="0 0 40 40"><path d="M20 36C9 28 5 20 7 13c2-6 9-8 13-3 4-5 11-3 13 3 2 7-2 15-13 23z" fill="#e0525a"/><path d="M20 31c-6-5-9-10-8-15" fill="none" stroke="#f6c3c3" stroke-width="2"/><g fill="#f7e2a0"><circle cx="15" cy="17" r="1"/><circle cx="25" cy="17" r="1"/><circle cx="20" cy="22" r="1"/></g></svg>
+      <svg class="fl f4" viewBox="0 0 60 24"><path d="M4 12C10 4 40 2 54 8c3 1 3 7 0 8C40 22 10 20 4 12z" fill="#5d9b3a" stroke="#3f7226" stroke-width="2"/><path d="M10 12h40" stroke="#8cc265" stroke-width="2"/></svg>
+      <svg class="fl f5" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="#f08a2c" stroke="#d26b12" stroke-width="2"/><circle cx="20" cy="20" r="8" fill="none" stroke="#f6b56a" stroke-width="2"/></svg>
+      <svg class="fl f6" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="16" ry="13" fill="#7d4b8f" stroke="#5c3469" stroke-width="2"/><ellipse cx="20" cy="20" rx="9" ry="7" fill="#a679b5"/></svg>
+    </div>
   <div class="wrap">
     <div class="hero-text">
       <span class="tag">🌿 আসল ফল ও সবজি দিয়ে তৈরি</span>
@@ -438,7 +649,7 @@
 </section>
 
 <!-- BENEFITS -->
-<section class="benefits" id="benefits">
+<section class="benefits wave" id="benefits">
   <div class="wrap">
     <h2>কেন সবুজ ক্রাঞ্চ?</h2>
     <p class="sub">মুখরোচক নাস্তা মানেই তেলে ভাজা, রং মেশানো কিছু নয়। ফল-সবজির পুষ্টি আর চিপসের মজা, দুটোই এক প্যাকেটে।</p>
@@ -450,6 +661,55 @@
       <div class="card"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div><h3>জিপলক প্যাক, দীর্ঘ মেয়াদ</h3><p>মাত্র ৩% আর্দ্রতা, তাই সিল করা অবস্থায় ১২ মাস ভালো থাকে। খোলার পর জিপ আটকে রাখলেই চলে।</p></div>
       <div class="card"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>হালাল সার্টিফায়েড</h3><p>হালাল সার্টিফায়েড ফ্যাক্টরিতে, পরিষ্কার-পরিচ্ছন্ন পরিবেশে তৈরি ও প্যাক করা।</p></div>
     </div>
+  </div>
+</section>
+
+<!-- NUTRITION -->
+<section class="nutrition wave" id="nutrition">
+  <div class="wrap">
+    <h2>পুষ্টিগুণ: কোন উপাদানে কী আছে</h2>
+    <p class="sub">প্রতিটি টুকরো আসল ফল বা সবজি, তাই তাদের নিজস্ব পুষ্টিগুণের বড় অংশ থেকে যায়।</p>
+    <div class="nut-grid">
+      <div class="nut"><i style="--c:#f3d36b"></i><b>কলা</b><div class="nut-tags"><span>পটাশিয়াম</span><span>ভিটামিন B6</span><span>তাৎক্ষণিক শক্তি</span></div></div>
+      <div class="nut"><i style="--c:#f0b429"></i><b>কাঁঠাল</b><div class="nut-tags"><span>আঁশ</span><span>পটাশিয়াম</span><span>ভিটামিন B6</span></div></div>
+      <div class="nut"><i style="--c:#8fbf3f"></i><b>কিউই</b><div class="nut-tags"><span>ভিটামিন K</span><span>আঁশ</span><span>পটাশিয়াম</span></div></div>
+      <div class="nut"><i style="--c:#e0525a"></i><b>স্ট্রবেরি</b><div class="nut-tags"><span>অ্যান্থোসায়ানিন (অ্যান্টিঅক্সিডেন্ট)</span><span>ম্যাঙ্গানিজ</span></div></div>
+      <div class="nut"><i style="--c:#5d9b3a"></i><b>ঢেঁড়স</b><div class="nut-tags"><span>আঁশ</span><span>ভিটামিন K</span><span>ফোলেট</span></div></div>
+      <div class="nut"><i style="--c:#f08a2c"></i><b>গাজর</b><div class="nut-tags"><span>বিটা-ক্যারোটিন (ভিটামিন A)</span><span>আঁশ</span></div></div>
+      <div class="nut"><i style="--c:#7d4b8f"></i><b>মিষ্টি আলু</b><div class="nut-tags"><span>বিটা-ক্যারোটিন</span><span>আঁশ</span><span>ম্যাঙ্গানিজ</span></div></div>
+      <div class="nut"><i style="--c:#4f8a35"></i><b>শিম</b><div class="nut-tags"><span>আঁশ</span><span>ভিটামিন K</span><span>আয়রন</span></div></div>
+    </div>
+    <div class="nut-facts">
+      <div class="nf" style="--nc:#277a40;--nt:#e8f3ea">
+        <div class="nf-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/></svg></div>
+        <div class="nf-k">ফাইবার</div>
+        <h3>আঁশ</h3>
+        <p>হজমে সাহায্য করে, অনেকক্ষণ পেট ভরা রাখে। তাই অল্পতেই ক্ষুধা মেটে।</p>
+        <div class="nf-src"><small>পাওয়া যায়</small><span><i style="--c:#f0b429"></i>কাঁঠাল</span><span><i style="--c:#5d9b3a"></i>ঢেঁড়স</span><span><i style="--c:#4f8a35"></i>শিম</span><span><i style="--c:#7d4b8f"></i>মিষ্টি আলু</span></div>
+      </div>
+      <div class="nf" style="--nc:#d4621a;--nt:#fdf0e6">
+        <div class="nf-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="nf-k">ভিটামিন A-এর উৎস</div>
+        <h3>বিটা-ক্যারোটিন</h3>
+        <p>শরীর এটা থেকে ভিটামিন A তৈরি করে, যা চোখ আর ত্বকের জন্য দরকারি।</p>
+        <div class="nf-src"><small>পাওয়া যায়</small><span><i style="--c:#f08a2c"></i>গাজর</span><span><i style="--c:#7d4b8f"></i>মিষ্টি আলু</span></div>
+      </div>
+      <div class="nf" style="--nc:#b8860b;--nt:#fdf6dc">
+        <div class="nf-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="nf-k">খনিজ</div>
+        <h3>পটাশিয়াম</h3>
+        <p>শরীরের পানি ও লবণের ভারসাম্য রাখে, পেশি আর স্নায়ুর কাজে লাগে।</p>
+        <div class="nf-src"><small>পাওয়া যায়</small><span><i style="--c:#f3d36b"></i>কলা</span><span><i style="--c:#f0b429"></i>কাঁঠাল</span><span><i style="--c:#8fbf3f"></i>কিউই</span></div>
+      </div>
+      <div class="nf" style="--nc:#c2385a;--nt:#fceaef">
+        <div class="nf-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div class="nf-k">প্রাকৃতিক রঙের উপাদান</div>
+        <h3>অ্যান্টিঅক্সিডেন্ট</h3>
+        <p>ফলের লাল-বেগুনি রঙের প্রাকৃতিক উপাদান, যা শরীরের কোষের সুরক্ষায় ভূমিকা রাখে বলে পরিচিত।</p>
+        <div class="nf-src"><small>পাওয়া যায়</small><span><i style="--c:#e0525a"></i>স্ট্রবেরি</span><span><i style="--c:#7d4b8f"></i>মিষ্টি আলু</span><span><i style="--c:#8fbf3f"></i>কিউই</span></div>
+      </div>
+    </div>
+    <p class="nut-note">* এখানে প্রতিটি ফল-সবজির সাধারণ পুষ্টিগুণ দেখানো হয়েছে। শুকানো ও ভ্যাকুয়াম ফ্রাইংয়ের সময় কিছু ভিটামিন (বিশেষ করে ভিটামিন C) কমে যায়, আর এতে কিছুটা তেল থাকে, তাই পরিমিত পরিমাণে খান। প্রতি প্যাকের সঠিক পুষ্টি তথ্য (ক্যালরি, ফ্যাট, চিনি) ল্যাব রিপোর্ট পাওয়ার পর প্যাকেটে ও এখানে যোগ করা হবে।</p>
   </div>
 </section>
 
@@ -475,7 +735,7 @@
 </section>
 
 <!-- COMPARE -->
-<section class="compare">
+<section class="compare wave">
   <div class="wrap">
     <h2>বাজারের খোলা ড্রাই ফ্রুটস vs সবুজ ক্রাঞ্চ</h2>
     <p class="sub">বাজারে খোলা অবস্থায় যা বিক্রি হয়, তার অনেকগুলোতেই রং, পুরোনো তেল বা চিনির সিরাপ থাকে। পার্থক্যটা নিজেই মিলিয়ে দেখুন।</p>
@@ -493,7 +753,7 @@
 </section>
 
 <!-- QUALITY -->
-<section id="quality">
+<section id="quality" class="wave">
   <div class="wrap q-grid">
     <div>
       <span class="tag">কোয়ালিটির নিশ্চয়তা</span>
@@ -518,8 +778,30 @@
   </div>
 </section>
 
+
+<!-- FACTORY PARTNER (তথ্য সাপ্লায়ারের পোর্টাল থেকে; নাম/লোগো ইচ্ছাকৃতভাবে বাদ) -->
+<section class="factory wave" id="factory">
+  <div class="wrap">
+    <h2>যে ফ্যাক্টরিতে তৈরি হয়</h2>
+    <p class="sub">চীনের ফুজিয়ান প্রদেশের একটি বিশেষায়িত ফল-সবজি প্রসেসিং ফ্যাক্টরি। সেখান থেকে সমুদ্রপথে এনে আমরা ঢাকায় স্টক রাখি।</p>
+    <div class="fac-stats">
+      <div><b>৫,২২৪ m²</b><span>ফ্যাক্টরির আয়তন</span></div>
+      <div><b>২০টি</b><span>প্রোডাকশন লাইন</span></div>
+      <div><b>৫২ জন</b><span>দক্ষ কর্মী</span></div>
+      <div><b>১০০%</b><span>সময়মতো ডিসপ্যাচ</span></div>
+    </div>
+    <ul class="fac-steps"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg><span>হাতে বাছাই</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg><span>উচ্চচাপে ধোয়া</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M12 8v1M12 15v1"/></svg><span>ভ্যাকুয়াম চেম্বার</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6M12 22v-4M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M22 12h-4"/></svg><span>আর্দ্রতা পরীক্ষা</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/></svg><span>স্বয়ংক্রিয় প্যাকিং</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/></svg><span>নিজস্ব ল্যাব</span></li></ul>
+    <div class="fac-trust">
+      <div><b>☪ হালাল সার্টিফায়েড</b><span>এই পণ্যের হালাল সনদ যাচাই করা হয়েছে</span></div>
+      <div><b>✓ তৃতীয় পক্ষের যাচাই</b><span>ফ্যাক্টরিটি আন্তর্জাতিক পরিদর্শন সংস্থা TÜV Rheinland দ্বারা যাচাইকৃত</span></div>
+      <div><b>✓ ইউরোপেও বিক্রি হয়</b><span>ইতালি ও ফ্রান্সের ক্রেতারাও এই ফ্যাক্টরি থেকে কেনেন</span></div>
+    </div>
+    <p class="nut-note">* তথ্যগুলো ফ্যাক্টরির অনলাইন সাপ্লায়ার প্রোফাইল থেকে নেওয়া। অন্যান্য সার্টিফিকেটের (ISO 22000, HACCP) কপি হাতে পেলে যাচাই করে এখানে যোগ করা হবে।</p>
+  </div>
+</section>
+
 <!-- PRICING -->
-<section class="pricing" id="pricing">
+<section class="pricing wave" id="pricing">
   <div class="wrap">
     <h2>প্যাকেজ ও দাম</h2>
     <p class="sub">প্রথমবার? ছোট প্যাক দিয়ে শুরু করুন। পরিবারের জন্য হলে কম্বোতে সবচেয়ে বেশি সাশ্রয়।</p>
@@ -579,11 +861,13 @@
         <li class="total"><span>মোট (প্যাকপ্রতি)</span><b>৳৩৬৬</b></li>
       </ul>
 
-      <div class="fresh">
+      <div class="fresh" id="fresh">
         <h4>৫০ গ্রাম প্যাক বানাতে লাগে প্রায় ৩০০ গ্রাম তাজা ফল-সবজি</h4>
-        <div class="fresh-row"><span class="fl">বাজার থেকে কেনা ফল-সবজি</span><span class="fbar" style="--w:100%"></span><b>~৩০০ গ্রাম</b></div>
-        <div class="fresh-row"><span class="fl">খোসা, বিচি, ভুতি বাদে</span><span class="fbar" style="--w:77%"></span><b>~২৩০ গ্রাম</b></div>
-        <div class="fresh-row"><span class="fl">পানি শুকিয়ে, মুচমুচে চিপস</span><span class="fbar dark" style="--w:17%"></span><b>৫০ গ্রাম</b></div>
+        <div class="f-row"><span class="f-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 11 4-7M19 11l-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M9 15v2M15 15v2M12 15v2"/></svg></span><span class="f-l">বাজার থেকে কেনা ফল-সবজি</span><span class="f-track"><i style="--w:100%"></i></span><b>~৩০০ গ্রাম</b></div>
+        <div class="f-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v14M6 12l6 6 6-6"/></svg>খোসা, বিচি, ভুতি বাদ</span></div>
+        <div class="f-row"><span class="f-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21 15 9"/><path d="M15 9c3-3 6-4 6-6-2 0-3 3-6 6"/><path d="m9 15 2 2"/></svg></span><span class="f-l">খাওয়ার উপযোগী অংশ</span><span class="f-track"><i style="--w:77%"></i></span><b>~২৩০ গ্রাম</b></div>
+        <div class="f-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v14M6 12l6 6 6-6"/></svg>কম তাপে পানি শুকানো</span></div>
+        <div class="f-row final"><span class="f-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l1 4v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7z"/><path d="M6 7h12"/><path d="M10 12c1-1.5 3-1.5 4 0s-1 4-2 4-3-2.5-2-4z"/></svg></span><span class="f-l">মুচমুচে চিপস, এক প্যাকে</span><span class="f-track"><i style="--w:17%"></i></span><b>৫০ গ্রাম</b></div>
         <p>ফল-সবজির ৭৫-৯০% পানি। কম তাপে সেই পানি বের করে নিলে ছোট এক প্যাকেটে জমা হয় অনেকখানি ফল। তাই প্যাকেটটা হালকা, কিন্তু ভেতরে প্রায় ৩০০ গ্রাম ফল-সবজির আঁশ, রং আর স্বাদ।</p>
       </div>
 
@@ -627,7 +911,7 @@
 </section>
 
 <!-- FAQ -->
-<section class="faq" id="faq">
+<section class="faq wave" id="faq">
   <div class="wrap">
     <h2>সাধারণ প্রশ্ন</h2>
     <p class="sub">আরও কিছু জানার থাকলে WhatsApp-এ মেসেজ দিন।</p>
@@ -647,7 +931,7 @@
 </section>
 
 <!-- ORDER -->
-<section class="order" id="order">
+<section class="order wave" id="order">
   <div class="wrap">
     <h2>অর্ডার করুন</h2>
     <p class="sub">নিচের ফর্মটি পূরণ করুন। "অর্ডার কনফার্ম করুন" চাপলে WhatsApp খুলবে, শুধু মেসেজটা পাঠিয়ে দিন। আমরা ফোন করে অর্ডার কনফার্ম করব।</p>
@@ -706,11 +990,11 @@
             <textarea id="address" name="address" autocomplete="street-address" placeholder="বাসা/হোল্ডিং নম্বর, রোড, এলাকা"></textarea>
             <div class="err">ডেলিভারির জন্য সম্পূর্ণ ঠিকানা দিন</div>
 
-            <button type="submit" class="btn pulse">✅ অর্ডার কনফার্ম করুন — <span id="btnTot">৳১,১৬৯</span></button>
+            <button type="submit" class="btn pulse submit-btn"><span>✅ অর্ডার কনফার্ম করুন</span><span class="bt-tot">মোট <span id="btnTot">৳১,১৬৯</span></span></button>
             <p class="secure">🔒 কোনো অগ্রিম টাকা লাগবে না। পণ্য হাতে পেয়ে পেমেন্ট করুন।</p>
           </div>
           <div class="thanks" id="thanks" role="status">
-            <div class="big">🎉</div>
+            <svg class="check" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="38"/><path d="M26 43l11 11 21-23"/></svg>
             <h3>ধন্যবাদ! আপনার অর্ডার পাঠানো হচ্ছে</h3>
             <p>WhatsApp খোলেনি? <a id="waFallback" href="#" target="_blank" rel="noopener">এখানে চাপুন</a> অথবা কল করুন <b>০১৭১২-৩৪৫৬৭৮</b></p>
           </div>
@@ -729,7 +1013,7 @@
 </footer>
 
 <div class="sticky-cta">
-  <div class="t"><b>৳৩৯৯ থেকে</b><span>~৩০০ গ্রাম তাজা ফল-সবজি থেকে তৈরি</span></div>
+  <div class="t"><b>৳৩৯৯ থেকে</b><span>~৩০০ গ্রাম ফল-সবজি থেকে তৈরি</span></div>
   <a href="#order" class="btn pulse">অর্ডার করুন</a>
 </div>
 
@@ -749,6 +1033,23 @@
   const $ = id => document.getElementById(id);
   const form = $('orderForm');
 
+  const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function popEl(el){ if (reduceMotion) return; el.classList.remove('pop-now'); void el.offsetWidth; el.classList.add('pop-now'); }
+  // 3. Roll a price from its old value to the new one
+  function rollTo(el, to){
+    const from = Number(el.dataset.v || to);
+    el.dataset.v = to;
+    if (reduceMotion || from === to) { el.textContent = tk(to); return; }
+    const t0 = performance.now(), dur = 450;
+    const step = now => {
+      const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = tk(Math.round(from + (to - from) * e));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    popEl(el);
+  }
+
   function calc(){
     const key = form.pack.value;
     const p = PACKS[key];
@@ -760,22 +1061,43 @@
     $('sumItem').textContent = p.name + ' × ' + bn(q);
     $('sumSub').textContent = tk(sub);
     $('sumDel').textContent = del === 0 ? 'ফ্রি' : tk(del);
-    $('sumTot').textContent = tk(tot);
-    $('btnTot').textContent = tk(tot);
+    rollTo($('sumTot'), tot);
+    rollTo($('btnTot'), tot);
     const save = (p.packs * PACKS.trial.price - p.price) * q + (p.freeDelivery ? DELIVERY[$('zone').value] : 0);
     $('sumSaveRow').hidden = save <= 0;
-    $('sumSave').textContent = tk(save);
+    if ($('sumSave').dataset.v !== String(save)) { $('sumSave').dataset.v = save; $('sumSave').textContent = tk(save); popEl($('sumSave')); }
     return { p, q, sub, del, tot };
   }
 
   form.addEventListener('change', calc);
+  // Pixel: first interaction with the order form = checkout started
+  let checkoutTracked = false;
+  form.addEventListener('focusin', () => {
+    if (checkoutTracked) return; checkoutTracked = true;
+    const o = calc(); track('InitiateCheckout', { value: o.tot, currency: 'BDT' });
+  });
+  // Pixel: visitor reached the pricing section
+  (() => {
+    const pr = document.getElementById('pricing');
+    if (!pr || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { track('ViewContent', { content_name: 'Pricing' }); io.disconnect(); } }, { threshold: .3 });
+    io.observe(pr);
+  })();
   $('qty').addEventListener('input', calc);
   $('minus').onclick = () => { $('qty').value = (+$('qty').value || 1) - 1; calc(); };
   $('plus').onclick  = () => { $('qty').value = (+$('qty').value || 1) + 1; calc(); };
 
   // Pricing-card buttons preselect the package
   document.querySelectorAll('[data-pick]').forEach(a => a.addEventListener('click', () => {
-    form.querySelector(`input[name=pack][value=${a.dataset.pick}]`).checked = true; calc();
+    const input = form.querySelector(`input[name=pack][value=${a.dataset.pick}]`);
+    input.checked = true; calc();
+    track('AddToCart', { content_name: PACKS[a.dataset.pick].name, value: PACKS[a.dataset.pick].price, currency: 'BDT' });
+    // 2. Feedback: flash the card, then highlight the chosen option in the form
+    const card = a.closest('.pack');
+    card.classList.remove('picked'); void card.offsetWidth; card.classList.add('picked');
+    setTimeout(() => card.classList.remove('picked'), 900);
+    const lbl = input.closest('label');
+    setTimeout(() => { lbl.classList.remove('flash'); void lbl.offsetWidth; lbl.classList.add('flash'); }, 650);
   }));
 
   const toEnDigits = s => s.replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
@@ -808,10 +1130,51 @@
     $('waFallback').href = url;
     $('formFields').style.display = 'none';
     $('thanks').style.display = 'block';
-    window.open(url, '_blank', 'noopener');
+    track('Lead', { content_name: o.p.name, value: o.tot, currency: 'BDT', num_items: o.q });
+    window.open(url, '_blank', 'noopener');   // open first, so the browser treats it as the user's click
+    // 4. Celebration: draw the check and burst leaf confetti
+    const th = $('thanks'); th.classList.add('play');
+    if (!reduceMotion) {
+      const colors = ['#277a40', '#7fb35a', '#d4621a', '#f0a52a', '#e0525a'];
+      for (let i = 0; i < 26; i++) {
+        const c = document.createElement('span');
+        c.className = 'confetti';
+        const ang = Math.random() * Math.PI * 2, dist = 90 + Math.random() * 140;
+        c.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+        c.style.setProperty('--dy', Math.sin(ang) * dist * .7 + 60 + 'px');
+        c.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+        c.style.background = colors[i % colors.length];
+        th.appendChild(c);
+        setTimeout(() => c.remove(), 1500);
+      }
+    }
   });
 
   calc();
+
+  // 6. Fill the breakdown bar segment by segment when it scrolls into view
+  (() => {
+    const sb = document.querySelector('.seg-bar');
+    if (!sb || reduceMotion || !('IntersectionObserver' in window)) return;
+    if (sb.getBoundingClientRect().top < innerHeight) return;   // already on screen: leave it drawn
+    sb.classList.add('armed');
+    const io = new IntersectionObserver(es => {
+      if (es[0].isIntersecting) { sb.classList.add('go'); io.disconnect(); }
+    }, { threshold: .4 });
+    io.observe(sb);
+  })();
+
+  // 300g -> 50g bars fill in sequence when scrolled into view
+  (() => {
+    const fr = document.getElementById('fresh');
+    if (!fr || reduceMotion || !('IntersectionObserver' in window)) return;
+    if (fr.getBoundingClientRect().top < innerHeight) return;
+    fr.classList.add('armed');
+    const io = new IntersectionObserver(es => {
+      if (es[0].isIntersecting) { fr.classList.add('go'); io.disconnect(); }
+    }, { threshold: .35 });
+    io.observe(fr);
+  })();
 
   // Price-breakdown tooltip (hover + keyboard focus)
   const bar = document.querySelector('.seg-bar');
